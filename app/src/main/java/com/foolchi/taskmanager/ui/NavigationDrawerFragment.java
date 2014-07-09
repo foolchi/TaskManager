@@ -4,6 +4,7 @@ package com.foolchi.taskmanager.ui;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Intent;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -252,9 +253,14 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         if (item.getItemId() == R.id.add_task) {
-            //Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
-            Task newTask = new Task(inflater.getContext(), 100, "Default Task");
-            newTask.saveToSharedPreferences();
+            // Callback for add task menu
+            Intent addTaskIntent = new Intent(inflater.getContext(), AddTaskActivity.class);
+            startActivity(addTaskIntent);
+            return true;
+        }
+        else if (item.getItemId() == R.id.action_settings){
+            System.out.println("Call clear");
+            Task.clearAllTask(inflater.getContext());
             return true;
         }
 

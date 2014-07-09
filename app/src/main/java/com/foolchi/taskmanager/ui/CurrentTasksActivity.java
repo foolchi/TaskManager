@@ -66,7 +66,7 @@ public class CurrentTasksActivity extends Fragment{
                 taskView.progressBar.setMax(task.getTarget());
                 taskView.progressBar.setProgress(task.getCurrentProgress());
                 taskView.textView = (TextView)view.findViewById(R.id.tv_task);
-                taskView.textView.setText(task.getTaskName());
+                taskView.textView.setText(task.toString());
 
                 view.setTag(taskView);
                 return view;
@@ -75,7 +75,7 @@ public class CurrentTasksActivity extends Fragment{
                 TaskView taskView = (TaskView)convertView.getTag();
                 taskView.progressBar.setProgress(task.getCurrentProgress());
                 taskView.progressBar.setMax(task.getTarget());
-                taskView.textView.setText(task.getTaskName());
+                taskView.textView.setText(task.toString());
                 return convertView;
             }
         }

@@ -57,6 +57,13 @@ public class Task {
         isFinished = false;
     }
 
+    public String toString(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(taskName);
+        stringBuilder.append("(");
+        stringBuilder.append(currentProgress).append("/").append(target).append(")");
+        return stringBuilder.toString();
+    }
     public void addSequence(Date date, int progress){
         sequenceList.add(new Sequence(date, progress));
         if (progress >= target){
@@ -72,6 +79,21 @@ public class Task {
     private void initialSequenceList(){
         sequenceList = new ArrayList<Sequence>();
         addSequence(new Date(), currentProgress);
+    }
+
+    public static void clearAllTask(Context context){
+        SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+        long maxId = sp.getLong("maxId", 0);
+
+        for (long i = 1; i <= maxId; i++){
+            sp = context.getSharedPreferences(""+i, Context.MODE_PRIVATE);
+            if (sp.contains("taskName")){
+                sp.edit().clear().commit();
+            }
+        }
+        sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+        sp.edit().clear().commit();
+        System.out.println("Tasks cleared");
     }
 
     public String getTaskName() {

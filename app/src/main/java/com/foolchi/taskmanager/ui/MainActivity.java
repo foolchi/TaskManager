@@ -58,18 +58,19 @@ public class MainActivity extends Activity
     }
 
     public void onSectionAttached(int number) {
-        Fragment fragment = null;
+        //Fragment fragment = null;
         switch (number) {
             case 1:
                 mTitle = getString(R.string.title_section1);
-                fragment = new CurrentTasksActivity();
+                //fragment = new CurrentTasksActivity();
                 break;
             case 2:
                 mTitle = getString(R.string.title_section2);
-                fragment = new HistoryActivity();
+                //fragment = new HistoryActivity();
                 break;
             case 3:
                 mTitle = getString(R.string.title_section3);
+                //fragment = new ClearActivity();
                 break;
         }
     }
@@ -131,6 +132,9 @@ public class MainActivity extends Activity
                 case 2:
                     fragment = new HistoryActivity();
                     break;
+
+                case 3:
+                    fragment = new ClearActivity();
             }
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
