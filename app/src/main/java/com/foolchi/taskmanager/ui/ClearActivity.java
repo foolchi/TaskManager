@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.foolchi.taskmanager.R;
-import com.foolchi.taskmanager.domain.Task;
-
+import com.foolchi.taskmanager.provider.TaskProvider;
 /**
  * Created by foolchi on 7/9/14.
  */
@@ -27,7 +26,8 @@ public class ClearActivity extends Fragment {
         bt_clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Task.clearAllTask(inflater.getContext());
+                TaskProvider taskProvider = new TaskProvider(inflater.getContext());
+                taskProvider.removeAll();
                 bt_clear.setText("Finished");
             }
         });

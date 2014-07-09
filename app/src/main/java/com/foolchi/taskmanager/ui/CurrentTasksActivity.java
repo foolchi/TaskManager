@@ -15,6 +15,7 @@ import com.foolchi.taskmanager.provider.TaskProvider;
 import com.foolchi.taskmanager.domain.Task;
 
 import java.util.List;
+import java.util.logging.Handler;
 
 /**
  * Created by foolchi on 7/8/14.
@@ -25,6 +26,7 @@ public class CurrentTasksActivity extends Fragment{
     private TaskAdapter taskAdapter;
     private LayoutInflater inflater;
     private ListView lv_task;
+    public Handler handler;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View currentTaskView = inflater.inflate(R.layout.fragment_main, container, false);

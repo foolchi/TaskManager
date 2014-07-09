@@ -8,7 +8,7 @@ import com.foolchi.taskmanager.domain.Sequence;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import com.foolchi.taskmanager.provider.TaskProvider;
 /**
  * Created by foolchi on 7/8/14.
  */
@@ -21,13 +21,11 @@ public class Task {
     private Context context;
     private String taskName;
 
-
-
     public Task(Context context, int target, String taskName){
         this.context = context;
         SharedPreferences spId = context.getSharedPreferences("config", Context.MODE_PRIVATE);
         id = spId.getLong("maxId", 0) + 1;
-        spId.edit().putLong("maxId", id).commit();
+        spId.edit().putLong("maxId", id).apply();
         setTaskName(taskName);
         setCurrentProgress(0);
         setTarget(target);
@@ -39,7 +37,7 @@ public class Task {
         this.context = context;
         SharedPreferences spId = context.getSharedPreferences("config", Context.MODE_PRIVATE);
         id = spId.getLong("maxId", 0) + 1;
-        spId.edit().putLong("maxId", id).commit();
+        spId.edit().putLong("maxId", id).apply();
         setTaskName(taskName);
         setCurrentProgress(current);
         setTarget(target);
@@ -72,8 +70,8 @@ public class Task {
     }
 
     public void saveToSharedPreferences(){
-        SharedPreferences sp = context.getSharedPreferences(""+id, Context.MODE_PRIVATE);
-        sp.edit().putInt("currentProgress", currentProgress).putInt("target", target).putString("taskName", taskName).commit();
+        TaskProvider taskProvider = new TaskProvider(context);
+        taskProvider.add(this);
     }
 
     private void initialSequenceList(){
@@ -81,19 +79,13 @@ public class Task {
         addSequence(new Date(), currentProgress);
     }
 
+    public void remove(){
+        TaskProvider taskProvider = new TaskProvider(context);
+        taskProvider.remove(this);
+    }
     public static void clearAllTask(Context context){
-        SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
-        long maxId = sp.getLong("maxId", 0);
-
-        for (long i = 1; i <= maxId; i++){
-            sp = context.getSharedPreferences(""+i, Context.MODE_PRIVATE);
-            if (sp.contains("taskName")){
-                sp.edit().clear().commit();
-            }
-        }
-        sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
-        sp.edit().clear().commit();
-        System.out.println("Tasks cleared");
+        TaskProvider taskProvider = new TaskProvider(context);
+        taskProvider.removeAll();
     }
 
     public String getTaskName() {
@@ -108,7 +100,7 @@ public class Task {
         return isFinished;
     }
 
-    private long getId(){
+    public long getId(){
         return id;
     }
 
