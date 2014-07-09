@@ -6,22 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.foolchi.taskmanager.R;
-import com.foolchi.taskmanager.Provider.TaskProvider;
+import com.foolchi.taskmanager.provider.TaskProvider;
 import com.foolchi.taskmanager.domain.Task;
 
 import java.util.List;
 
 /**
  * Created by foolchi on 7/8/14.
+ * Show current tasks
  */
 public class CurrentTasksActivity extends Fragment{
-    private Button bt_test;
     private List<Task> taskList;
     private TaskAdapter taskAdapter;
     private LayoutInflater inflater;

@@ -1,4 +1,4 @@
-package com.foolchi.taskmanager.Provider;
+package com.foolchi.taskmanager.provider;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,10 +8,9 @@ import com.foolchi.taskmanager.domain.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.foolchi.taskmanager.domain.Task;
-
 /**
  * Created by foolchi on 7/8/14.
+ * Provider class to get all the tasks
  */
 public class TaskProvider {
 
