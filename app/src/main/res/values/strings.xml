@@ -14,5 +14,6 @@
     <string name="task_name">Task Name</string>
     <string name="target">Target(Positive Int)</string>
     <string name="currentProgress">Current Progress (0-Target)</string>
+    <string name="addProgress">Current Progress</string>
 
 </resources>

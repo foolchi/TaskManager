@@ -3,18 +3,14 @@ package com.foolchi.taskmanager.domain;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.foolchi.taskmanager.domain.Sequence;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.io.Serializable;
 import com.foolchi.taskmanager.provider.TaskProvider;
 /**
  * Created by foolchi on 7/8/14.
+ * Task class
  */
-public class Task {
+public class Task{
     private long id;
-    private List<Sequence> sequenceList;
     private int currentProgress;
     private int target;
     private boolean isFinished;
@@ -29,7 +25,6 @@ public class Task {
         setTaskName(taskName);
         setCurrentProgress(0);
         setTarget(target);
-        initialSequenceList();
         isFinished = false;
     }
 
@@ -41,7 +36,6 @@ public class Task {
         setTaskName(taskName);
         setCurrentProgress(current);
         setTarget(target);
-        initialSequenceList();
         isFinished = false;
     }
 
@@ -51,22 +45,15 @@ public class Task {
         setTaskName(taskName);
         setCurrentProgress(currentProgress);
         setTarget(target);
-        initialSequenceList();
         isFinished = false;
     }
 
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(id + ": ");
         stringBuilder.append(taskName);
-        stringBuilder.append("(");
-        stringBuilder.append(currentProgress).append("/").append(target).append(")");
+        stringBuilder.append("(").append(currentProgress).append("/").append(target).append(")");
         return stringBuilder.toString();
-    }
-    public void addSequence(Date date, int progress){
-        sequenceList.add(new Sequence(date, progress));
-        if (progress >= target){
-            isFinished = true;
-        }
     }
 
     public void saveToSharedPreferences(){
@@ -74,10 +61,6 @@ public class Task {
         taskProvider.add(this);
     }
 
-    private void initialSequenceList(){
-        sequenceList = new ArrayList<Sequence>();
-        addSequence(new Date(), currentProgress);
-    }
 
     public void remove(){
         TaskProvider taskProvider = new TaskProvider(context);
@@ -102,6 +85,10 @@ public class Task {
 
     public long getId(){
         return id;
+    }
+
+    public void setId(long id){
+        this.id = id;
     }
 
     public int getCurrentProgress() {

@@ -10,7 +10,6 @@ import com.foolchi.taskmanager.domain.Task;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import com.foolchi.taskmanager.provider.DBHelper;
 
 /**
  * Created by foolchi on 7/8/14.
@@ -52,18 +51,24 @@ public class TaskProvider {
 
     public void remove(Task task){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+        SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+        long maxId = sp.getLong("maxId", 0);
 
         if (db.isOpen()){
             db.execSQL("delete from task where id = ?", new String[]{task.getId()+""});
+            if (task.getId() == maxId){
+                sp.edit().putLong("maxId", maxId - 1).apply();
+            }
             db.close();
         }
     }
 
     public void removeAll(){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-
         if (db.isOpen()){
             db.execSQL("delete from task");
+            SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+            sp.edit().putLong("maxId", 0).apply();
             db.close();
         }
     }
@@ -84,7 +89,7 @@ public class TaskProvider {
                         task = new Task(context, Long.parseLong(cursor.getString(0)), Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)), cursor.getString(1));
                     }
                 }
-                if (task != null){
+                if (task != null && task.getCurrentProgress() < task.getTarget()){
                     tasks.add(task);
                 }
                 cursor.close();
@@ -93,33 +98,4 @@ public class TaskProvider {
         }
         return tasks;
     }
-
-    /*
-    private SharedPreferences sp;
-    private Context context;
-    public TaskProvider(Context context){
-        this.context = context;
-    }
-
-    public List<Task> getAllTask(){
-        List<Task> tasks = new ArrayList<Task>();
-        sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
-        long maxId = sp.getLong("maxId", 0);
-        if (maxId == 0)
-            return tasks;
-
-        for (long i = 1; i <= maxId; i++){
-            sp = context.getSharedPreferences(""+i, Context.MODE_PRIVATE);
-            if (sp.contains("taskName")) {
-                tasks.add(new Task(context, i, sp.getInt("currentProgress", 0),
-                        sp.getInt("target", 0), sp.getString("taskName", " ")));
-            }
-        }
-
-        tasks.add(new Task(context, 100, "default"));
-
-        System.out.println("Total tasks: " + tasks.size());
-        return tasks;
-    }
-    */
 }
