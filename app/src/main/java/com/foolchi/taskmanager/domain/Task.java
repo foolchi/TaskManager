@@ -13,7 +13,6 @@ public class Task{
     private long id;
     private int currentProgress;
     private int target;
-    private boolean isFinished;
     private Context context;
     private String taskName;
 
@@ -25,7 +24,6 @@ public class Task{
         setTaskName(taskName);
         setCurrentProgress(0);
         setTarget(target);
-        isFinished = false;
     }
 
     public Task(Context context, int target, int current, String taskName) {
@@ -36,7 +34,6 @@ public class Task{
         setTaskName(taskName);
         setCurrentProgress(current);
         setTarget(target);
-        isFinished = false;
     }
 
     public Task(Context context, long id, int currentProgress, int target, String taskName){
@@ -45,7 +42,6 @@ public class Task{
         setTaskName(taskName);
         setCurrentProgress(currentProgress);
         setTarget(target);
-        isFinished = false;
     }
 
     public String toString(){
@@ -77,10 +73,6 @@ public class Task{
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
-    }
-
-    public boolean isFinished(){
-        return isFinished;
     }
 
     public long getId(){
