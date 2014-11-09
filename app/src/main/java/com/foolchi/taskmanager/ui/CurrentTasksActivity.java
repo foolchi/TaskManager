@@ -45,7 +45,8 @@ public class CurrentTasksActivity extends Fragment{
         View currentTaskView = inflater.inflate(R.layout.fragment_main, container, false);
         this.inflater = inflater;
         lv_task = (ListView)currentTaskView.findViewById(R.id.lv_task);
-        TaskProvider taskProvider = new TaskProvider(inflater.getContext());
+        TaskProvider taskProvider;
+        taskProvider = new TaskProvider(this.inflater.getContext());
         taskList = taskProvider.getAllTask();
         taskAdapter = new TaskAdapter();
         lv_task.setAdapter(taskAdapter);

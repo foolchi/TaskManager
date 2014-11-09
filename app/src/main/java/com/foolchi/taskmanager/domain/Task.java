@@ -46,7 +46,7 @@ public class Task{
 
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(id + ": ");
+        //stringBuilder.append(id + ": ");
         stringBuilder.append(taskName);
         stringBuilder.append("(").append(currentProgress).append("/").append(target).append(")");
         return stringBuilder.toString();
